@@ -27,7 +27,7 @@ namespace API.Repositories
                 queryBooks = queryBooks.Where
                     (b => b.Authors.Any(a => a.NameOfAuthor.Contains(pageRequest.Author)));
 
-            // Apply sorting for sort by title
+            // Apply sorting for sort by 
             if (!pageRequest.SortByTitle.ToString().Equals(null))
                 queryBooks = pageRequest.SortByTitle.Equals("ASC") ? 
                     queryBooks.OrderBy(b => b.Title) : 
@@ -43,16 +43,7 @@ namespace API.Repositories
                 Take(pageRequest.LimitPage);
 
             var book = await queryBooks.ToListAsync();
-                
-                
-                
-                //.Select(b => new BookDTO
-               // {
-                  // Title = b.Title,
-                  //  Authors = b.Authors.Select(a => new AuthorDTO { NameOfAuthor = a.NameOfAuthor }).ToList()
-                //})
-                //.ToListAsync();
-
+              
             return book;
         }
         public async Task<Book> GetBookByID(int id)

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.BooksController.GetBooks(API.DTO.Filters.PageRequest)">
+            <summary>
+            Get a list of books
+            </summary>
+            <param name="pageRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.BooksController.PostBook(API.DTO.BookDTO)">
+            <summary>
+            Add a new book
+            </summary>
+            <param name="bookDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.BooksController.GetBookByID(System.Int32)">
+            <summary>
+            Return a specific book
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.BooksController.UpdateBookByID(System.Int32,API.DTO.BookDTO)">
+            <summary>
+            Updated a specific book
+            </summary>
+            <param name="id"></param>
+            <param name="bookDTO"></param>
+            <returns></returns>
+        </member>
+        <member name="M:API.Controllers.BooksController.DeleteBookByID(System.Int32)">
+            <summary>
+            Delete a specific book
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:API.Data.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:API.Data.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:API.Data.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:API.Data.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

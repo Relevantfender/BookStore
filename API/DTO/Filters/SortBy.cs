@@ -5,9 +5,10 @@ namespace API.DTO.Filters
 {
     public enum SortBy
     {
-        [EnumMember(Value = "ASC")]
+        
+        [EnumMember(Value = "asc")]
         ASC,
-        [EnumMember(Value = "DESC")]
+        [EnumMember(Value = "desc")]
         DESC
     }
 }

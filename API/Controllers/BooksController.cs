@@ -25,13 +25,22 @@ namespace API.Controllers
             _mapper = mapper;
             _authorService = authorService;
         }
+        /// <summary>
+        /// Get a list of books
+        /// </summary>
+        /// <param name="pageRequest"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult GetBooks([FromQuery] PageRequest pageRequest)
         {
             IEnumerable<BookDTO> books = _bookService.GetBooks(pageRequest);
             return Ok(books);
         }
-
+        /// <summary>
+        /// Add a new book
+        /// </summary>
+        /// <param name="bookDTO"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> PostBook([FromBody] BookDTO bookDTO)
         {
@@ -40,11 +49,22 @@ namespace API.Controllers
             return Ok(bookDTO);
         }
 
+        /// <summary>
+        /// Return a specific book
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<BookDTO>> GetBookByID(int id) {
             return await _bookService.GetBookByID(id);
 
         }
+        /// <summary>
+        /// Updated a specific book
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="bookDTO"></param>
+        /// <returns></returns>
         [HttpPatch("{id}")]
         public async Task<ActionResult<BookDTO>> UpdateBookByID(int id, [FromBody] BookDTO bookDTO)
         {
@@ -61,7 +81,7 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// deletes a specific book
+        /// Delete a specific book
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -85,7 +105,6 @@ namespace API.Controllers
             }
         }
 
-        
 
     }
         
