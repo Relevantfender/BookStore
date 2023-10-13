@@ -8,20 +8,11 @@ namespace API.DTO
 
         public AutoMapperProfile()
         {
-            CreateMap<BookDTO, Book>()
-             .ForMember(dest => dest.Authors, opt => opt.MapFrom(src => src.Authors))
-             .ReverseMap();
+            CreateMap<Book, BookDTO>().ReverseMap();
 
-            CreateMap<AuthorDTO, Author>()
-                .ReverseMap();
+            CreateMap<Author, AuthorDTO>().ReverseMap();
 
-            CreateMap<ICollection<AuthorDTO>, ICollection<Author>>()
-             .ConvertUsing((src, dest, context) =>
-                 context.Mapper.Map<ICollection<Author>>(src));
-
-            CreateMap<ICollection<Author>, ICollection<AuthorDTO>>()
-                .ConvertUsing((src, dest, context) =>
-                    context.Mapper.Map<ICollection<AuthorDTO>>(src));
+           
         }
     }
 }

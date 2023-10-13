@@ -19,9 +19,9 @@ namespace API.Services
             _mapper = mapper;
             _authorService = authorService;
         }
-        public List<BookDTO> GetBooks(PageRequest pageRequest)
+        public async Task<List<BookDTO>> GetBooks(PageRequest pageRequest)
             {
-            var books = _bookRepository.GetBooks(pageRequest);
+            var books = await _bookRepository.GetBooks(pageRequest);
             return _mapper.Map<List<BookDTO>>(books);
             }
 
@@ -59,19 +59,12 @@ namespace API.Services
             if (book == null)
                 return false;
 
-            book.Isbn = bookDTO.Isbn;
-            book.YearOfPublishing = bookDTO.YearOfPublishing;
-            book.Title = bookDTO.Title;
-            book.NumberOfPages = bookDTO.NumberOfPages;
-            book.CoverPhoto = bookDTO.CoverPhoto;   
-            
-            
-            
-          //  book.Authors.Clear();
-          //add authors manually 
-           
-
+            _mapper.Map(bookDTO, book);
+            //mapping it over from dto to book sets the id to 0 since it's not present in bookdto
+            //so id is set to its value
+            book.Id = id;
             _bookRepository.UpdateBookByID(book);
+            
             await _bookRepository.SaveChanges();
             return true;
 

@@ -8,7 +8,7 @@ namespace API.Services
     public interface IBookService
     {
         Task<Book> AddBook(BookDTO bookDTO);
-        List<BookDTO> GetBooks(PageRequest pageRequest);
+        Task<List<BookDTO>> GetBooks(PageRequest pageRequest);
         Task<BookDTO> GetBookByID(int id);
         Task<bool> DeleteBookByID(int id);
         Task<bool> UpdateBookByID(int id, BookDTO bookDTO);

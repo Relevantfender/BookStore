@@ -18,14 +18,16 @@ namespace API.Repositories
        
         public async Task<List<Book>> GetBooks(PageRequest pageRequest)
         {
-            var queryBooks = _context.Books.AsQueryable();
+            var queryBooks = _context.Books.Include(b => b.Authors).
+                AsQueryable();
 
-            if (!pageRequest.Title.Equals(null))
-                queryBooks = queryBooks.Where(b => b.Title.Contains(pageRequest.Title));
+            if (!string.IsNullOrEmpty(pageRequest.Title)) 
+                
+                queryBooks = queryBooks.Where(b => b.Title.ToLower().Contains(pageRequest.Title.ToLower()));
 
-            if (pageRequest.Author != null)
+            if (!string.IsNullOrEmpty(pageRequest.Author))
                 queryBooks = queryBooks.Where
-                    (b => b.Authors.Any(a => a.NameOfAuthor.Contains(pageRequest.Author)));
+                    (b => b.Authors.Any(a => a.NameOfAuthor.ToLower().Contains(pageRequest.Author.ToLower())));
 
             // Apply sorting for sort by 
             if (!pageRequest.SortByTitle.ToString().Equals(null))
@@ -95,7 +97,8 @@ namespace API.Repositories
             
             try
             {
-                _context.Update(book);
+                _context.Attach(book);
+                _context.Entry(book).State = EntityState.Modified;
                  return true;
             }
             catch (DbUpdateConcurrencyException)

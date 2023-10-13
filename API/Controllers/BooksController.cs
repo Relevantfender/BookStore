@@ -31,9 +31,9 @@ namespace API.Controllers
         /// <param name="pageRequest"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult GetBooks([FromQuery] PageRequest pageRequest)
+        public async Task<IActionResult> GetBooks([FromQuery] PageRequest pageRequest)
         {
-            IEnumerable<BookDTO> books = _bookService.GetBooks(pageRequest);
+            List<BookDTO> books = await _bookService.GetBooks(pageRequest);
             return Ok(books);
         }
         /// <summary>
