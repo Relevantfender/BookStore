@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Reflection;
+﻿
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -11,7 +9,7 @@ public class EnumSchemaFilter : ISchemaFilter
     {
         if (context.Type.IsEnum)
         {
-            schema.Enum.Clear(); // Clear any existing enum values
+            schema.Enum.Clear(); 
             schema.Type = "string";
             schema.Format = null;
 

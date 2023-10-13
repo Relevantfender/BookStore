@@ -7,7 +7,7 @@ namespace API.Repositories
     public interface IBookRepository
     {
         Task<Book> AddBook(Book book);
-        Task<ICollection<Book>> GetBooks(PageRequest pageRequest);
+        Task<List<Book>> GetBooks(PageRequest pageRequest);
         Task<bool> SaveChanges();
         Task<Book> GetBookByID(int id);
         Task<bool> DeleteBookByID(int id);

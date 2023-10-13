@@ -16,7 +16,7 @@ namespace API.Repositories
             _context = context;
         }
        
-        public async Task<ICollection<Book>> GetBooks(PageRequest pageRequest)
+        public async Task<List<Book>> GetBooks(PageRequest pageRequest)
         {
             var queryBooks = _context.Books.AsQueryable();
 
