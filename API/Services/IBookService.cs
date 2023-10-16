@@ -12,5 +12,6 @@ namespace API.Services
         Task<BookDTO> GetBookByID(int id);
         Task<bool> DeleteBookByID(int id);
         Task<bool> UpdateBookByID(int id, BookDTO bookDTO);
+        Task<bool> ResetBooks();
     }
 }

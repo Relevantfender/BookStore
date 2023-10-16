@@ -23,16 +23,12 @@ builder.Services.AddSwaggerGen(opt =>
         Title = "Book Store API",
         Version = "v1",
         Description = "Small API centric application for managing books. " +
-                            "Hope I do well,I tried my best."
+                            "Hope you like it."
     });
     opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "API.xml"));
 
     opt.SchemaFilter<EnumSchemaFilter>();
-    //opt.SchemaFilter<EnumSchemaFilter>();
-    // Display enums as strings in Swagger UI
-    // opt.EnableAnnotations();
-    // opt.DescribeAllEnumsAsStrings();
-});
+ });
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IBookService, BookService>();

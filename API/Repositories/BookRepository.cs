@@ -74,11 +74,34 @@ namespace API.Repositories
             await _context.Books.AddAsync(book);
             return book;
         }
+   
+        public async Task<Book> GetBookByTitleAndAuthors(string title, ICollection<AuthorDTO> authors)
+        {
+            var books = await _context.Books.Include(b => b.Authors).ToListAsync();
+
+            var book = books.FirstOrDefault(b =>
+                b.Title == title &&
+                b.Authors.Any(a => authors.Any(aDTO =>
+                    a.NameOfAuthor == aDTO.NameOfAuthor && a.LastNameOfAuthor == aDTO.LastNameOfAuthor)));
+            if (book==default)
+            {
+                return null;
+            }
+            return book;
+
+        }
         public async Task<bool> DeleteBookByID(int id)
         {
             try
             {
                 var book = await GetBookByID(id);
+                foreach (var author in book.Authors)
+                {
+                    if (author.Books.Count == 1 && author.Books.Contains(book))
+                    {
+                        _context.Authors.Remove(author);
+                    }
+                }
                 _context.Remove(book);
                 await _context.SaveChangesAsync();
                 return true;
@@ -111,6 +134,16 @@ namespace API.Repositories
                 //handle other update errors(422)
                 return false;
             }
+        }
+
+       //resets autoincrement value to 1 in database
+        public void SQLCommand()
+        {
+           
+            var SQLCommand = "BEGIN TRANSACTION; DELETE FROM Books; DELETE FROM Authors; DELETE FROM AuthorBook; UPDATE sqlite_sequence SET seq = 0; COMMIT TRANSACTION;";
+            
+            _context.Database.ExecuteSqlRaw(SQLCommand);
+
         }
         public async Task<bool> SaveChanges()
         {

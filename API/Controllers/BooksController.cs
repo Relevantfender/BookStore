@@ -10,7 +10,9 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers
 {
 
-
+    /// <summary>
+    /// Books Management
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class BooksController : ControllerBase
@@ -44,9 +46,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBook([FromBody] BookDTO bookDTO)
         {
-            await _bookService.AddBook(bookDTO);
+            Book newBook = await _bookService.AddBook(bookDTO);
 
-            return Ok(bookDTO);
+            if (newBook != null)
+            {
+                return Ok(newBook);
+            }
+
+            return BadRequest("Failed to add the book.");
         }
 
         /// <summary>
@@ -72,7 +79,7 @@ namespace API.Controllers
                 return UnprocessableEntity("Invalid input");
             //returned value if the book is updated
             var bookUpdated = await _bookService.UpdateBookByID(id, bookDTO);
-
+            //if true it's updated, if false it's not found
             if (!bookUpdated)
                 return NotFound();
             var updatedBook = await _bookService.GetBookByID(id);

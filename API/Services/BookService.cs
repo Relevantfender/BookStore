@@ -4,6 +4,7 @@ using API.Entities;
 using API.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace API.Services
 {
@@ -34,12 +35,26 @@ namespace API.Services
        public async Task<Book> AddBook(BookDTO bookDTO) {
             try
             {
+                //check if the book already exists 
+                Book newBook = await _bookRepository.GetBookByTitleAndAuthors(bookDTO.Title, bookDTO.Authors);
+                //if exists return that book for error handling
+                if (newBook != null) 
+                {
+                    return newBook;
+                }
                 Book book = _mapper.Map<Book>(bookDTO);
+                ICollection<Author> existingAuthors = await _authorService.GetExistingAuthors(bookDTO.Authors);
+                book.Authors = existingAuthors;
+                if (book.Authors.Count()==0)
+                {
+                    book.Authors = _mapper.Map<ICollection<Author>>(bookDTO.Authors);
+                }
 
-                book.Authors = await _authorService.AddAuthors(bookDTO.Authors);
                 await _bookRepository.AddBook(book);
                 await _bookRepository.SaveChanges();
+
                 return book;
+
             }
             catch(Exception ex)
             {
@@ -65,6 +80,25 @@ namespace API.Services
             book.Id = id;
             _bookRepository.UpdateBookByID(book);
             
+            await _bookRepository.SaveChanges();
+            return true;
+
+        }
+
+        public async Task<bool> ResetBooks()
+        {
+            //delete the table author, book, bookauthor and reset autoincrement as transaction
+
+            _bookRepository.SQLCommand();
+
+          //deserialize the json file into a list of books
+            string json = File.ReadAllText("Data\\ResetDatabase.json");
+            List<BookDTO> StandardLibrary = JsonConvert.DeserializeObject<List<BookDTO>>(json);
+            // adding the list of books 
+            foreach (BookDTO book in StandardLibrary)
+            { 
+                await AddBook(book);
+            }
             await _bookRepository.SaveChanges();
             return true;
 

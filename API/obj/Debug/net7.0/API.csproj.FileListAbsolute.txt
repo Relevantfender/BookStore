@@ -71,3 +71,5 @@ C:\Users\Miroslav\Desktop\Interview\API\bin\Debug\net7.0\AutoMapper.dll
 C:\Users\Miroslav\Desktop\Interview\API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Miroslav\Desktop\Interview\API\bin\Debug\net7.0\API.xml
 C:\Users\Miroslav\Desktop\Interview\API\obj\Debug\net7.0\API.xml
+C:\Users\Miroslav\Desktop\Interview\API\bin\Debug\net7.0\Data\ResetDatabase.json
+C:\Users\Miroslav\Desktop\Interview\API\bin\Debug\net7.0\Newtonsoft.Json.dll

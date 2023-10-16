@@ -24,8 +24,37 @@ namespace API.Services
             return authors;
            
         }
-      
+        public async Task<bool> DeleteAuthorFromBook(int bookid,AuthorDTO authorDTO) 
+        {
+            var author = _mapper.Map<Author>(authorDTO);
+            var operation = await _authorRepository.DeleteAuthorFromBook(bookid, author);
+            if (operation)
+            {
+                return true;
+            }
+            else return false;
+            
 
-       
+            
+        }
+        public async Task<List<Author>> GetExistingAuthors(ICollection<AuthorDTO> authorDTOs)
+        {
+            List<Author> existingAuthors = new List<Author>();
+
+            foreach (var authorDTO in authorDTOs)
+            {
+                Author existingAuthor = await _authorRepository
+                    .GetAuthorByNameAndDateOfBirth(authorDTO.NameOfAuthor, authorDTO.LastNameOfAuthor, authorDTO.DateOfBirth);
+
+                if (existingAuthor != null)
+                {
+                    existingAuthors.Add(existingAuthor);
+                }
+            }
+
+            return existingAuthors;
+        }
+
+
     }
 }
