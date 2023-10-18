@@ -7,6 +7,6 @@ namespace API.Services
     {
         Task<ICollection<Author>> AddAuthors(ICollection<AuthorDTO> authorDTO);
         Task<bool> DeleteAuthorFromBook(int bookid, AuthorDTO authorDTO);
-        Task<List<Author>> GetExistingAuthors(ICollection<AuthorDTO> authorDTOs);
+        Task<IList<Author>> GetExistingAuthors(ICollection<AuthorDTO> authorDTOs);
     }
 }

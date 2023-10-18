@@ -37,7 +37,7 @@ namespace API.Services
 
             
         }
-        public async Task<List<Author>> GetExistingAuthors(ICollection<AuthorDTO> authorDTOs)
+        public async Task<IList<Author>> GetExistingAuthors(ICollection<AuthorDTO> authorDTOs)
         {
             List<Author> existingAuthors = new List<Author>();
 
@@ -54,6 +54,7 @@ namespace API.Services
 
             return existingAuthors;
         }
+
 
 
     }

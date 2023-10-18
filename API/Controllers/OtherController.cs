@@ -1,7 +1,7 @@
 ﻿using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Exceptions
 {
     /// <summary>
     /// Other operation management
@@ -24,7 +24,11 @@ namespace API.Controllers
         public async Task<IActionResult> ResetDatabase()
         {
             await _bookService.ResetBooks();
-            return Ok("Books has been successfully reset");
+            return Ok(new BookResponse
+            {
+                StatusCode = StatusCodes.Status200OK,
+                ResponseMessage = "Books have been successfully reset"
+            });
         }
 
 
