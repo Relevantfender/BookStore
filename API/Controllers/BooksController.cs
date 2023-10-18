@@ -57,7 +57,6 @@ namespace API.Exceptions
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         public async Task<IActionResult> PostBook([FromBody] BookDTO bookDTO)
         {
-
             // Check for missing or invalid parameters and returns 422
             if (bookDTO.Title.Equals(null) || bookDTO.Isbn.Equals(0) || bookDTO.NumberOfPages.Equals(0))
             {
@@ -105,9 +104,6 @@ namespace API.Exceptions
             });
         }
 
-
-
-
         /// <summary>
         /// Return a specific book
         /// </summary>
@@ -120,9 +116,7 @@ namespace API.Exceptions
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BookDTO>> GetBookByID(int id)
         {
-
             return await _bookService.GetBookByID(id);
-
         }
         /// <summary>
         /// Updated a specific book
@@ -145,7 +139,7 @@ namespace API.Exceptions
                 return UnprocessableEntity(new BookResponse
                 {
                     StatusCode = StatusCodes.Status422UnprocessableEntity,
-                    ResponseMessage = "Data wasn't inserted corectly"
+                    ResponseMessage = "No data was inserted"
                 });
             //returned value if the book is updated
             var bookUpdated = await _bookService.UpdateBookByID(id, bookDTO);
@@ -156,9 +150,7 @@ namespace API.Exceptions
                     StatusCode = StatusCodes.Status404NotFound,
                     ResponseMessage = "Book Not found"
                 });
-            var updatedBook = await _bookService.GetBookByID(id);
-            //object of the updated book mapped to dto
-            return Ok(new BookResponse
+            else return Ok(new BookResponse
             {
                 StatusCode = StatusCodes.Status200OK,
                 ResponseMessage = "Book Updated successfully"

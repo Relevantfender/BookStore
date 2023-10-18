@@ -26,7 +26,6 @@ namespace API.Services
             return _mapper.Map<List<BookDTO>>(books);
         }
 
-
         public async Task<BookDTO> GetBookByID(int id)
         {
 
@@ -42,6 +41,7 @@ namespace API.Services
             }
 
         }
+
         public async Task<Book> AddBook(BookDTO bookDTO)
         {
            
@@ -63,9 +63,6 @@ namespace API.Services
                 return book;
             }
             
-        }
-
-
         public async Task<bool> DeleteBookByID(int id)
         {
             try
@@ -97,8 +94,6 @@ namespace API.Services
 
             
         }
-
-
 
         public async Task<bool> ResetBooks()
         {

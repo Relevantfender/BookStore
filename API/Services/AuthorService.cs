@@ -22,7 +22,6 @@ namespace API.Services
             await _authorRepository.AddAuthors(authors);
             await _authorRepository.SaveChanges();
             return authors;
-           
         }
         public async Task<bool> DeleteAuthorFromBook(int bookid,AuthorDTO authorDTO) 
         {
@@ -33,9 +32,6 @@ namespace API.Services
                 return true;
             }
             else return false;
-            
-
-            
         }
         public async Task<IList<Author>> GetExistingAuthors(ICollection<AuthorDTO> authorDTOs)
         {
@@ -45,17 +41,12 @@ namespace API.Services
             {
                 Author existingAuthor = await _authorRepository
                     .GetAuthorByNameAndDateOfBirth(authorDTO.NameOfAuthor, authorDTO.LastNameOfAuthor, authorDTO.DateOfBirth);
-
                 if (existingAuthor != null)
                 {
                     existingAuthors.Add(existingAuthor);
                 }
             }
-
             return existingAuthors;
         }
-
-
-
     }
 }

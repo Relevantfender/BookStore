@@ -10,24 +10,24 @@ namespace API.Repositories
     public class BookRepository : IBookRepository
     {
         private readonly DataContext _context;
-
         public BookRepository(DataContext context)
         {
             _context = context;
         }
-
         public async Task<List<Book>> GetBooks(PageRequest pageRequest)
         {
             var queryBooks = _context.Books.Include(b => b.Authors).
                 AsQueryable();
             //filter by title 
             if (!string.IsNullOrEmpty(pageRequest.Title))
-
-                queryBooks = queryBooks.Where(b => b.Title.ToLower().Contains(pageRequest.Title.ToLower()));
+                queryBooks = queryBooks
+                    .Where(b => b.Title.ToLower().Contains(pageRequest.Title.ToLower()));
             //filter by author
             if (!string.IsNullOrEmpty(pageRequest.Author))
                 queryBooks = queryBooks.Where
-                    (b => b.Authors.Any(a => a.NameOfAuthor.ToLower().Contains(pageRequest.Author.ToLower())));
+                    (b => b.Authors.Any(
+                        a => a.NameOfAuthor.ToLower().Contains(pageRequest.Author.ToLower())
+                        ));
 
             PageRequest compare = new PageRequest
             {
@@ -39,7 +39,6 @@ namespace API.Repositories
                 SortByAuthor = null
             };
             // Sort by ID if no parameters are entered
-
 
             if (pageRequest.Equals(compare))
             {
@@ -58,7 +57,6 @@ namespace API.Repositories
                     queryBooks = pageRequest.SortByAuthor.Equals("ASC") ?
                         queryBooks.OrderBy(b => b.Authors.FirstOrDefault().NameOfAuthor) :
                         queryBooks.OrderByDescending(b => b.Authors.FirstOrDefault().NameOfAuthor);
-
             }
             // Apply pagination
             queryBooks = queryBooks.Skip((pageRequest.StartPage - 1) * pageRequest.LimitPage).
@@ -70,7 +68,6 @@ namespace API.Repositories
         }
         public async Task<Book> GetBookByID(int id)
         {
-
             Book book = await _context.Books
                  .Include(b => b.Authors)
                  .FirstOrDefaultAsync(book => book.Id == id);
@@ -81,18 +78,12 @@ namespace API.Repositories
             }
 
             return book;
-
         }
         public async Task<Book> AddBook(Book book)
         {
-           
-           
-                await _context.Books.AddAsync(book);
-                return book;
-            
+            await _context.Books.AddAsync(book);
+            return book;
         }
-
-
         public async Task<Book> GetBookByTitleAndAuthors(string title, ICollection<AuthorDTO> authors)
         {
             var books = await _context.Books.Include(b => b.Authors).ToListAsync();
@@ -106,11 +97,9 @@ namespace API.Repositories
                 return null;
             }
             return book;
-
         }
         public async Task<bool> DeleteBookByID(int id)
         {
-            
             try
             {
                 var book = await GetBookByID(id);
@@ -135,14 +124,11 @@ namespace API.Repositories
 
                 return false;
             }
-
         }
 
         public bool UpdateBookByID(Book book)
         {
-
             {
-
                 try
                 {
                     _context.Attach(book);
